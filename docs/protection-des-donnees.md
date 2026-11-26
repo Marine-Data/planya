@@ -13,7 +13,7 @@ ce sont celles qui tournent en ligne.
 | | |
 |---|---|
 | Responsable | Marine Zinzen, particulier, projet personnel et non commercial |
-| Contact | adresse dédiée en cours de création (voir [points ouverts](#9-points-ouverts)) |
+| Contact | adresse dédiée en cours de création (voir [section 9](#9-décisions-prises-et-mise-en-œuvre)) |
 | Délégué à la protection des données | Non désigné (non obligatoire : ni organisme public, ni traitement à grande échelle, article 37) |
 | Pourquoi un registre | L'exemption de l'article 30.5 (moins de 250 personnes) ne joue pas : le traitement n'est pas occasionnel. |
 
@@ -35,7 +35,7 @@ l'éditrice reste responsable du traitement réalisé par l'application.
 
 | Finalités | Base légale | Pourquoi |
 |---|---|---|
-| 1 à 4 | Exécution du contrat (6.1.b) | La personne crée un compte pour utiliser ces fonctions. Suppose des conditions d'utilisation, encore à rédiger (voir [points ouverts](#9-points-ouverts)). |
+| 1 à 4 | Exécution du contrat (6.1.b) | La personne crée un compte pour utiliser ces fonctions. Suppose des conditions d'utilisation, encore à rédiger (voir [section 9](#9-décisions-prises-et-mise-en-œuvre)). |
 | 5 | Consentement (6.1.a) | Activées appareil par appareil, réglables par type, retirables à tout moment ([`js/notifications.js`](../js/notifications.js)). |
 | 6 | Intérêt légitime (6.1.f) | Protéger le service et ses utilisateurs ; journaux limités et tenus par les hébergeurs. |
 
@@ -58,7 +58,7 @@ Les utilisateurs inscrits, membres d'un ou plusieurs séjours.
 | Abonnement aux notifications de l'appareil | `abonnements_push` | La personne | Adresse technique fournie par le navigateur. |
 
 Aucune donnée sensible au sens de l'article 9 n'est demandée. Les champs libres (notes, commentaires) pourraient en contenir
-si un utilisateur en saisit : voir [points ouverts](#9-points-ouverts).
+si un utilisateur en saisit : voir [section 9](#9-décisions-prises-et-mise-en-œuvre).
 
 ### Destinataires
 
@@ -78,7 +78,7 @@ si un utilisateur en saisit : voir [points ouverts](#9-points-ouverts).
   utilisateur ; seules les données techniques de connexion (adresse IP) transitent.
 - Supabase stocke les données dans l'Union européenne, mais c'est une société américaine : un accès depuis les États-Unis
   (support, maintenance, demande d'une autorité) reste possible. Encadrement à vérifier dans son contrat de sous-traitance
-  (clauses contractuelles types ou adhésion au cadre UE–États-Unis) : voir [points ouverts](#9-points-ouverts).
+  (clauses contractuelles types ou adhésion au cadre UE–États-Unis) : voir [section 9](#9-décisions-prises-et-mise-en-œuvre).
 - Notifications : les services des navigateurs reçoivent l'adresse technique de l'appareil et un contenu chiffré qu'ils ne peuvent
   pas lire. Transfert limité, uniquement si la personne active les notifications.
 - Aucune requête n'est envoyée à Google Fonts ni à un CDN : polices et bibliothèques sont hébergées avec le site
