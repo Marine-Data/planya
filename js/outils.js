@@ -35,4 +35,6 @@ export async function pendant(form, action) {
   finally { bouton.disabled = false; }
 }
 export const aller = route => { location.hash = route; };
-export const adresseRetour = () => location.origin + location.pathname;
+// Adresse de l'appli, toujours sous la même forme (« …/planya/ », sans « index.html ») :
+// c'est celle autorisée dans Supabase pour les liens des e-mails de connexion.
+export const adresseRetour = () => location.origin + location.pathname.replace(/index\.html$/, '');
