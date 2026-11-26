@@ -88,12 +88,12 @@ si un utilisateur en saisit : voir [points ouverts](#9-points-ouverts).
 
 | Donnée | Durée | Comment |
 |---|---|---|
-| Compte et données personnelles | Jusqu'à la suppression du compte | Bouton « Supprimer mon compte » ([`sql/010_comptes.sql`](../sql/010_comptes.sql)) |
+| Compte et données personnelles | Jusqu'à la suppression du compte, et au plus **1 an sans connexion** (avertissement par e-mail 1 mois avant) | Bouton « Supprimer mon compte » ([`sql/010_comptes.sql`](../sql/010_comptes.sql)) ; suppression des comptes inactifs : à mettre en place |
 | Données d'une personne dans un séjour | Jusqu'à son départ du séjour | Effacées ou anonymisées par la base au départ (`depart_du_sejour`, [`sql/012_fil.sql`](../sql/012_fil.sql)) |
 | Fichiers (billets, photos de missions) | Effacés dans l'heure qui suit la suppression de la donnée | File `fichiers_a_effacer` + fonction planifiée [`nettoyer-fichiers`](../supabase/functions/nettoyer-fichiers/index.ts) |
 | Notifications | Effacées dès l'envoi | [`supabase/functions/planya-push`](../supabase/functions/planya-push/index.ts) |
 | Historique des tâches planifiées | 7 jours | Purge automatique hebdomadaire |
-| Séjour et contenus partagés | Jusqu'à la suppression du séjour par l'organisation (aucune suppression automatique à ce jour : voir [points ouverts](#9-points-ouverts)) | Supprimer le séjour efface tout son contenu en cascade |
+| Séjour et contenus partagés | Jusqu'à la suppression du séjour par l'organisation, et au plus **1 an après sa date de fin** (membres prévenus 1 mois avant) | Supprimer le séjour efface tout son contenu en cascade ; suppression automatique : à mettre en place |
 | Contenus utiles au groupe d'une personne qui part (dépenses, activités, sondages créés) | Comme le séjour | Conservés **anonymisés** (« Ancien membre ») pour ne pas fausser les comptes des autres |
 | Journaux techniques (adresse IP) | Durées fixées par les hébergeurs | Tenus par Supabase et GitHub, non exploités |
 
@@ -152,29 +152,32 @@ Au regard des neuf critères du CEPD (lignes directrices WP248), le traitement n
   en dehors du groupe ; il ne vise pas les aspects que ce critère protège (travail, situation économique, santé, comportement…) ;
 - pas de surveillance systématique (les horaires de voyage sont saisis volontairement, sans géolocalisation) ;
 - pas de données sensibles demandées, pas de traitement à grande échelle, pas de croisement de fichiers ;
-- pas de personnes vulnérables visées (un âge minimum reste à fixer) ;
+- pas de personnes vulnérables visées : l'application est réservée aux personnes majeures ;
 - pas de technologie innovante ni de décision automatisée produisant des effets juridiques.
 
-Une analyse d'impact ne paraît donc pas obligatoire. À réexaminer si l'application grandit ou ajoute des fonctions
-(messagerie, géolocalisation, photos partagées).
+Une analyse d'impact ne paraît donc pas obligatoire. Elle est **réalisée quand même**, à titre de bonne pratique
+(méthode CNIL), et sera réexaminée si l'application grandit ou ajoute des fonctions (messagerie, géolocalisation, photos partagées).
 
 ## 8. Violation de données (articles 33 et 34)
 
 En cas de violation : évaluation du risque, notification à la CNIL sous 72 heures si un risque existe, information des personnes
 si le risque est élevé, et inscription au registre des violations. Les journaux de Supabase servent à l'analyse.
 
-## 9. Points ouverts
+## 9. Décisions prises et mise en œuvre
 
-Ce qui reste à faire avant une ouverture large au public :
+| Sujet | Décision | État |
+|---|---|---|
+| Base légale principale | Exécution du contrat (6.1.b) | Décidé ; conditions d'utilisation à rédiger |
+| Notifications | Consentement (6.1.a), avec l'article 82 de la loi Informatique et Libertés pour l'accès à l'appareil | En place |
+| Âge minimum | **18 ans** : pleine capacité à conclure le contrat ; case à cocher à l'inscription | À mettre en place |
+| Comptes inactifs | Suppression après **1 an** sans connexion, avertissement 1 mois avant | À mettre en place |
+| Séjours terminés | Suppression **1 an** après la date de fin, membres prévenus 1 mois avant | À mettre en place |
+| Analyse d'impact | Non obligatoire, réalisée quand même | À rédiger |
+| Données de la version bêta (« Saraillon », août 2026) | Archive remise à l'éditrice, puis suppression de la base : plus de finalité justifiant leur conservation | À faire |
+
+Restent aussi à faire avant une ouverture large au public :
 
 - **Adresse de contact dédiée** pour les demandes RGPD (emplacement prévu : `CONTACT_EMAIL` dans [`js/config.js`](../js/config.js)).
-- **Conditions d'utilisation** : à rédiger, puisque la base légale principale est le contrat.
 - **Contrats de sous-traitance** (article 28) : accepter et archiver les DPA de Supabase, GitHub et Brevo, et vérifier
   l'encadrement des transferts vers les États-Unis (Supabase, services de notification).
-- **Comptes et séjours inactifs** : aucune suppression automatique aujourd'hui. Définir une durée au-delà de laquelle un compte
-  inactif ou un séjour terminé est supprimé (par exemple après avertissement par e-mail).
-- **Âge** : fixer un âge minimum dans les conditions d'utilisation. L'article 8 (15 ans en France) vise le consentement :
-  il ne s'applique ici qu'aux notifications ; pour le reste, c'est la capacité du mineur à conclure le contrat qui compte.
 - **Champs libres** : rappeler dans l'interface de ne pas y saisir de données sensibles (santé, allergies…).
-- **Données de la version bêta** (« Saraillon », séjour d'août 2026) : encore présentes dans la base, verrouillées et inaccessibles
-  de l'extérieur ; décider de leur suppression.
