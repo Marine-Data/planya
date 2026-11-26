@@ -6,6 +6,8 @@ Application web pour organiser un séjour entre amis : un espace réservé au gr
 
 Le projet est né de « Saraillon », une application faite pour un séjour réel en août 2026 (planning, défis, repas, galerie, messages). Il est en train de devenir une application ouverte à tous, construite par étapes.
 
+> **Pourquoi ce projet ?** Je me forme au droit des données et de l'IA. Construire une application collective oblige à trancher des questions concrètes : qui voit quoi, combien de temps on garde, que devient une dépense quand son auteur supprime son compte. Ces choix sont documentés dans **[le registre des traitements de Planya](docs/protection-des-donnees.md)**, chaque mesure étant reliée au code qui l'applique.
+
 ## Où en est le projet
 
 | Étape | Contenu | État |
@@ -22,12 +24,16 @@ Le projet est né de « Saraillon », une application faite pour un séjour rée
 | 10 | Classement général en points (missions, corvées, activités), calculé par la base | ✅ |
 | 11 | Fil d'actu : événements écrits par la base (impossibles à falsifier, sans secret), publications, likes, commentaires | ✅ |
 | 12 | Notifications sur le téléphone (Web Push), réglables par type | ✅ |
-| 13 | Chat du groupe, messages privés | à venir |
-| 14 | Politique de confidentialité, mentions légales, téléchargement de ses données, suppression de compte | ✅ |
+| 13 | Politique de confidentialité, mentions légales, téléchargement de ses données, suppression de compte | ✅ |
+| 14 | Chat du groupe, messages privés, chasse au trésor | à venir |
+| 15 | Direction artistique de l'appli | à venir |
 
 Planya est la version publique de « Saraillon » : mêmes fonctions et même esprit, réécrites module par module pour fonctionner avec n'importe quel groupe.
 
 ## Protection des données dès la conception
+
+Résumé ci-dessous ; détail article par article dans [`docs/protection-des-donnees.md`](docs/protection-des-donnees.md).
+
 
 - **Cloisonnement par séjour** : les règles de sécurité de la base (Row Level Security de PostgreSQL) n'autorisent une personne à lire un séjour et ses membres que si elle en fait partie. L'interface n'a aucun moyen de contourner ces règles.
 - **Rien pour les visiteurs non connectés** : aucun droit d'accès aux tables pour le rôle anonyme.
