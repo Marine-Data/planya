@@ -15,6 +15,10 @@ ce sont celles qui tournent en ligne.
 | Responsable | Marine Zinzen, particulier, projet personnel et non commercial |
 | Contact | adresse dédiée en cours de création (voir [points ouverts](#9-points-ouverts)) |
 | Délégué à la protection des données | Non désigné (non obligatoire : ni organisme public, ni traitement à grande échelle, article 37) |
+| Pourquoi un registre | L'exemption de l'article 30.5 (moins de 250 personnes) ne joue pas : le traitement n'est pas occasionnel. |
+
+Les utilisateurs qui saisissent des informations sur leur groupe le font dans un cadre privé (exemption domestique, article 2.2.c) ;
+l'éditrice reste responsable du traitement réalisé par l'application.
 
 ## 2. Traitement : « Organisation d'un séjour à plusieurs »
 
@@ -31,7 +35,7 @@ ce sont celles qui tournent en ligne.
 
 | Finalités | Base légale | Pourquoi |
 |---|---|---|
-| 1 à 4 | Exécution du service demandé (6.1.b) | La personne crée un compte pour utiliser ces fonctions. |
+| 1 à 4 | Exécution du contrat (6.1.b) | La personne crée un compte pour utiliser ces fonctions. Suppose des conditions d'utilisation, encore à rédiger (voir [points ouverts](#9-points-ouverts)). |
 | 5 | Consentement (6.1.a) | Activées appareil par appareil, réglables par type, retirables à tout moment ([`js/notifications.js`](../js/notifications.js)). |
 | 6 | Intérêt légitime (6.1.f) | Protéger le service et ses utilisateurs ; journaux limités et tenus par les hébergeurs. |
 
@@ -63,17 +67,22 @@ si un utilisateur en saisit : voir [points ouverts](#9-points-ouverts).
 
 | Sous-traitant | Rôle | Localisation des données |
 |---|---|---|
-| Supabase | Base de données, comptes, fichiers, fonctions | Union européenne (Stockholm, Suède) |
+| Supabase | Base de données, comptes, fichiers, fonctions | Stockage dans l'Union européenne (Stockholm, Suède) ; société américaine |
 | GitHub (GitHub Pages) | Hébergement du site (fichiers statiques, sans données utilisateur) | États-Unis — adhérent au cadre de protection des données UE–États-Unis |
 | Brevo | Envoi des e-mails de connexion (adresse e-mail) | France |
-| Services de notification des navigateurs (Google, Apple, Mozilla) | Acheminement des notifications | Contenu chiffré de bout en bout (Web Push) : ils ne peuvent pas le lire |
+| Services de notification des navigateurs (Google, Apple, Mozilla) | Acheminement des notifications | Principalement États-Unis ; contenu chiffré de bout en bout (Web Push), ils ne peuvent pas le lire |
 
 ### Transferts hors Union européenne
 
 - Hébergement du site par GitHub (États-Unis) : décision d'adéquation du cadre UE–États-Unis. Le site ne contient aucune donnée
   utilisateur ; seules les données techniques de connexion (adresse IP) transitent.
-- Aucune autre donnée n'est stockée hors de l'Union européenne. Aucune requête n'est envoyée à Google Fonts ni à un CDN :
-  polices et bibliothèques sont hébergées avec le site ([`fonts/`](../fonts), [`js/vendor/`](../js/vendor)).
+- Supabase stocke les données dans l'Union européenne, mais c'est une société américaine : un accès depuis les États-Unis
+  (support, maintenance, demande d'une autorité) reste possible. Encadrement à vérifier dans son contrat de sous-traitance
+  (clauses contractuelles types ou adhésion au cadre UE–États-Unis) : voir [points ouverts](#9-points-ouverts).
+- Notifications : les services des navigateurs reçoivent l'adresse technique de l'appareil et un contenu chiffré qu'ils ne peuvent
+  pas lire. Transfert limité, uniquement si la personne active les notifications.
+- Aucune requête n'est envoyée à Google Fonts ni à un CDN : polices et bibliothèques sont hébergées avec le site
+  ([`fonts/`](../fonts), [`js/vendor/`](../js/vendor)).
 
 ### Durées de conservation
 
@@ -84,7 +93,9 @@ si un utilisateur en saisit : voir [points ouverts](#9-points-ouverts).
 | Fichiers (billets, photos de missions) | Effacés dans l'heure qui suit la suppression de la donnée | File `fichiers_a_effacer` + fonction planifiée [`nettoyer-fichiers`](../supabase/functions/nettoyer-fichiers/index.ts) |
 | Notifications | Effacées dès l'envoi | [`supabase/functions/planya-push`](../supabase/functions/planya-push/index.ts) |
 | Historique des tâches planifiées | 7 jours | Purge automatique hebdomadaire |
-| Contenus partagés utiles au groupe (dépenses, activités, sondages créés) | Durée du séjour | Conservés après la suppression du compte, **anonymisés** (« Ancien membre ») pour ne pas fausser les comptes des autres |
+| Séjour et contenus partagés | Jusqu'à la suppression du séjour par l'organisation (aucune suppression automatique à ce jour : voir [points ouverts](#9-points-ouverts)) | Supprimer le séjour efface tout son contenu en cascade |
+| Contenus utiles au groupe d'une personne qui part (dépenses, activités, sondages créés) | Comme le séjour | Conservés **anonymisés** (« Ancien membre ») pour ne pas fausser les comptes des autres |
+| Journaux techniques (adresse IP) | Durées fixées par les hébergeurs | Tenus par Supabase et GitHub, non exploités |
 
 ## 3. Protection des données dès la conception (article 25)
 
@@ -101,7 +112,7 @@ si un utilisateur en saisit : voir [points ouverts](#9-points-ouverts).
 
 ## 4. Mesures de sécurité (article 32)
 
-- Chiffrement des échanges (HTTPS) et des mots de passe (gérés par Supabase Auth).
+- Chiffrement des échanges (HTTPS) ; mots de passe hachés, jamais stockés en clair (Supabase Auth).
 - Règles d'accès testées avec plusieurs comptes avant chaque mise en ligne (membre, non-membre, organisation, visiteur anonyme).
 - Espaces de stockage privés ; liens d'ouverture temporaires (1 heure).
 - Fonctions de la base en `security definer` avec `search_path` vide, pour éviter le détournement de leurs droits.
@@ -114,7 +125,9 @@ si un utilisateur en saisit : voir [points ouverts](#9-points-ouverts).
 | Accès et portabilité (15, 20) | « Mon compte » → **Télécharger mes données** : fichier JSON lisible par d'autres outils ([`js/legal.js`](../js/legal.js)). |
 | Rectification (16) | Chacun modifie directement ses contenus et son prénom. |
 | Effacement (17) | « Mon compte » → **Supprimer mon compte**, immédiat. Quitter un séjour efface ses données de ce séjour. |
-| Opposition, retrait du consentement (21, 7.3) | Notifications désactivables à tout moment, par appareil et par type. |
+| Retrait du consentement (7.3) | Notifications désactivables à tout moment, par appareil et par type. |
+| Opposition (21) | Ne s'applique qu'aux journaux techniques (intérêt légitime) : demande à l'adresse de contact. |
+| Limitation (18) | Sur demande à l'adresse de contact. |
 | Information (13) | Politique de confidentialité et mentions légales, accessibles sans compte ([`js/legal.js`](../js/legal.js)). |
 
 ## 6. Cas particulier : la suppression d'un compte
@@ -133,10 +146,17 @@ Détail : [`sql/010_comptes.sql`](../sql/010_comptes.sql), [`sql/012_fil.sql`](.
 
 ## 7. Analyse d'impact (article 35)
 
-Au regard des critères du CEPD (lignes directrices WP248), le traitement ne paraît pas en remplir deux : pas d'évaluation ni de
-notation des personnes, pas de surveillance systématique, pas de données sensibles demandées, pas de traitement à grande échelle,
-pas de personnes vulnérables visées, pas de technologie innovante au sens des lignes directrices. Une analyse d'impact ne paraît
-donc pas obligatoire. À réexaminer si l'application grandit ou ajoute des fonctions (messagerie, géolocalisation, photos partagées).
+Au regard des neuf critères du CEPD (lignes directrices WP248), le traitement ne paraît pas en remplir deux :
+
+- **évaluation ou notation** : il existe un classement en points, mais c'est un jeu entre membres d'un même séjour, sans effet
+  en dehors du groupe ; il ne vise pas les aspects que ce critère protège (travail, situation économique, santé, comportement…) ;
+- pas de surveillance systématique (les horaires de voyage sont saisis volontairement, sans géolocalisation) ;
+- pas de données sensibles demandées, pas de traitement à grande échelle, pas de croisement de fichiers ;
+- pas de personnes vulnérables visées (un âge minimum reste à fixer) ;
+- pas de technologie innovante ni de décision automatisée produisant des effets juridiques.
+
+Une analyse d'impact ne paraît donc pas obligatoire. À réexaminer si l'application grandit ou ajoute des fonctions
+(messagerie, géolocalisation, photos partagées).
 
 ## 8. Violation de données (articles 33 et 34)
 
@@ -148,10 +168,13 @@ si le risque est élevé, et inscription au registre des violations. Les journau
 Ce qui reste à faire avant une ouverture large au public :
 
 - **Adresse de contact dédiée** pour les demandes RGPD (emplacement prévu : `CONTACT_EMAIL` dans [`js/config.js`](../js/config.js)).
-- **Contrats de sous-traitance** (article 28) : accepter et archiver les DPA de Supabase, GitHub et Brevo.
-- **Comptes et séjours inactifs** : définir une durée au-delà de laquelle un compte inactif ou un séjour terminé est supprimé
-  (par exemple après avertissement par e-mail).
-- **Âge** : préciser un âge minimum dans les conditions d'utilisation (article 8 du RGPD, 15 ans en France).
+- **Conditions d'utilisation** : à rédiger, puisque la base légale principale est le contrat.
+- **Contrats de sous-traitance** (article 28) : accepter et archiver les DPA de Supabase, GitHub et Brevo, et vérifier
+  l'encadrement des transferts vers les États-Unis (Supabase, services de notification).
+- **Comptes et séjours inactifs** : aucune suppression automatique aujourd'hui. Définir une durée au-delà de laquelle un compte
+  inactif ou un séjour terminé est supprimé (par exemple après avertissement par e-mail).
+- **Âge** : fixer un âge minimum dans les conditions d'utilisation. L'article 8 (15 ans en France) vise le consentement :
+  il ne s'applique ici qu'aux notifications ; pour le reste, c'est la capacité du mineur à conclure le contrat qui compte.
 - **Champs libres** : rappeler dans l'interface de ne pas y saisir de données sensibles (santé, allergies…).
 - **Données de la version bêta** (« Saraillon », séjour d'août 2026) : encore présentes dans la base, verrouillées et inaccessibles
   de l'extérieur ; décider de leur suppression.
