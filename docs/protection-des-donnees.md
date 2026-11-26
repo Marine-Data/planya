@@ -35,7 +35,7 @@ l'éditrice reste responsable du traitement réalisé par l'application.
 
 | Finalités | Base légale | Pourquoi |
 |---|---|---|
-| 1 à 4 | Exécution du contrat (6.1.b) | La personne crée un compte pour utiliser ces fonctions. Suppose des conditions d'utilisation, encore à rédiger (voir [section 9](#9-décisions-prises-et-mise-en-œuvre)). |
+| 1 à 4 | Exécution du contrat (6.1.b) | La personne crée un compte et accepte les conditions d'utilisation pour utiliser ces fonctions. |
 | 5 | Consentement (6.1.a) | Activées appareil par appareil, réglables par type, retirables à tout moment ([`js/notifications.js`](../js/notifications.js)). |
 | 6 | Intérêt légitime (6.1.f) | Protéger le service et ses utilisateurs ; journaux limités et tenus par les hébergeurs. |
 
@@ -167,9 +167,9 @@ si le risque est élevé, et inscription au registre des violations. Les journau
 
 | Sujet | Décision | État |
 |---|---|---|
-| Base légale principale | Exécution du contrat (6.1.b) | Décidé ; conditions d'utilisation à rédiger |
+| Base légale principale | Exécution du contrat (6.1.b) | En place : [conditions d'utilisation](../js/legal.js), acceptées à l'inscription (version et date conservées) |
 | Notifications | Consentement (6.1.a), avec l'article 82 de la loi Informatique et Libertés pour l'accès à l'appareil | En place |
-| Âge minimum | **18 ans** : pleine capacité à conclure le contrat ; case à cocher à l'inscription | À mettre en place |
+| Âge minimum | **18 ans** : pleine capacité à conclure le contrat ; case à cocher à l'inscription | En place |
 | Comptes inactifs | Suppression après **1 an** sans connexion, avertissement 1 mois avant | À mettre en place |
 | Séjours terminés | Suppression **1 an** après la date de fin, membres prévenus 1 mois avant | À mettre en place |
 | Analyse d'impact | Non obligatoire, réalisée quand même | À rédiger |
