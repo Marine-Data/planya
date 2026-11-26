@@ -318,3 +318,6 @@ textarea { resize: vertical; }
 .reaction.actif { border-color: var(--corail); }
 .entree-commentaires { margin-top: 8px; }
 .onglets button { white-space: nowrap; }
+
+.case-conditions { align-items: flex-start; font-weight: 400; font-size: .9rem; }
+.case-conditions input { margin-top: 2px; flex-shrink: 0; }

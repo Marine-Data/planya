@@ -12,7 +12,7 @@ import { ecranValise } from './valise.js';
 import { ecranMissions } from './missions.js';
 import { ecranSondages } from './sondages.js';
 import { ecranFil } from './fil.js';
-import { pageMentions, pageConfidentialite, ecranCompte } from './legal.js';
+import { pageMentions, pageConfidentialite, pageConditions, ecranCompte, VERSION_CONDITIONS } from './legal.js';
 import { desactiverNotifications } from './notifications.js';
 const app = document.getElementById('app');
 const btnDeconnexion = document.getElementById('deconnexion');
@@ -58,7 +58,9 @@ function ecranConnexion(onglet = 'connexion') {
       <label for="mdp">Mot de passe${inscription ? ' (8 caractères minimum)' : ''}</label>
       <input id="mdp" type="password" autocomplete="${inscription ? 'new-password' : 'current-password'}" minlength="8" required>
       <p class="erreur" role="alert"></p>
-      ${inscription ? '<p class="info">En créant un compte, tu acceptes la <a href="#/confidentialite">politique de confidentialité</a>.</p>' : ''}
+      ${inscription ? `<label class="case case-conditions"><input type="checkbox" id="accord" required>
+        <span>J’ai 18 ans ou plus et j’accepte les <a href="#/conditions">conditions d’utilisation</a>.
+        Mes données sont traitées selon la <a href="#/confidentialite">politique de confidentialité</a>.</span></label>` : ''}
       <button class="btn" type="submit">${inscription ? 'Créer mon compte' : 'Se connecter'}</button>
       ${inscription ? '' : '<button class="lien" type="button" id="oubli">Mot de passe oublié ?</button>'}
     </form>`;
@@ -68,9 +70,14 @@ function ecranConnexion(onglet = 'connexion') {
     e.preventDefault();
     const email = form.email.value.trim(), mdp = form.mdp.value;
     if (!email || mdp.length < 8) { form.querySelector('.erreur').textContent = 'Entre ton e-mail et un mot de passe de 8 caractères minimum.'; return; }
+    if (inscription && !form.accord.checked) { form.querySelector('.erreur').textContent = 'Coche la case pour confirmer que tu as 18 ans ou plus et accepter les conditions.'; return; }
     pendant(form, async () => {
       if (inscription) {
-        const { data, error } = await sb.auth.signUp({ email, password: mdp, options: { emailRedirectTo: adresseRetour() } });
+        // On garde la trace de l'acceptation : version des conditions et date.
+        const { data, error } = await sb.auth.signUp({ email, password: mdp, options: {
+          emailRedirectTo: adresseRetour(),
+          data: { majeur: true, conditions_version: VERSION_CONDITIONS, conditions_acceptees_le: new Date().toISOString() },
+        } });
         if (error) throw error;
         if (!data.session) {
           app.innerHTML = `<div class="carte"><h2>Vérifie ta boîte mail</h2>
@@ -399,6 +406,7 @@ function router() {
   const h = location.hash;
   if (h === '#/confidentialite') return pageConfidentialite(app, session);
   if (h === '#/mentions-legales') return pageMentions(app, session);
+  if (h === '#/conditions') return pageConditions(app, session);
   if (enRecuperation) return ecranNouveauMotDePasse();
   if (!session) return ecranConnexion();
   if (h === '#/compte') return ecranCompte(app, session);

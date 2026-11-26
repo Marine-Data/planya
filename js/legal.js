@@ -41,7 +41,7 @@ export function pageConfidentialite(app, session) {
         et pour que chaque séjour ne soit visible que par ses membres.</p>
 
       <h2>Qui est responsable de vos données ?</h2>
-      <p>Marine Zinzen, éditrice de Planya (voir les <a href="#/mentions-legales">mentions légales</a>). Contact : ${contact()}.</p>
+      <p>Marine Zinzen, éditrice de Planya (voir les <a href="#/mentions-legales">mentions légales</a>). Planya est réservée aux personnes majeures. Contact : ${contact()}.</p>
 
       <h2>Quelles données, pour quoi faire ?</h2>
       <ul>
@@ -83,6 +83,72 @@ export function pageConfidentialite(app, session) {
         ce qui est indispensable au service. Les polices et le code sont hébergés avec le site : aucune requête n’est envoyée à Google ou à un autre service tiers.</p>
 
       <p class="meta">Mise à jour : ${MAJ}.</p>
+    </article>`;
+  app.querySelector('#retour').onclick = () => aller('#/');
+}
+
+// ---------- Conditions d'utilisation ----------
+export const VERSION_CONDITIONS = '2026-11-26';
+
+export function pageConditions(app, session) {
+  app.innerHTML = `
+    ${retour(session)}
+    <article class="carte texte-legal">
+      <h1>Conditions d’utilisation</h1>
+
+      <h2>1. Objet</h2>
+      <p>Planya est une application gratuite pour organiser un séjour à plusieurs : planning, dépenses partagées, courses, corvées,
+        informations pratiques, jeux et fil d’actu. Elle est éditée par Marine Zinzen, à titre personnel et non commercial
+        (voir les <a href="#/mentions-legales">mentions légales</a>). Créer un compte vaut acceptation des présentes conditions.</p>
+
+      <h2>2. Accès</h2>
+      <p>Planya est réservée aux <strong>personnes majeures (18 ans ou plus)</strong>. Vous vous engagez à donner une adresse e-mail
+        qui vous appartient et à garder votre mot de passe confidentiel. Le code d’invitation d’un séjour donne accès à son contenu :
+        ne le partagez qu’avec les personnes que vous souhaitez inviter.</p>
+
+      <h2>3. Séjours, organisation et membres</h2>
+      <p>La personne qui crée un séjour en assure l’organisation : elle peut changer le code d’invitation, retirer un membre,
+        effacer des contenus et supprimer le séjour. Les membres ajoutent et modifient les contenus partagés du séjour.
+        Chacun peut quitter un séjour à tout moment.</p>
+
+      <h2>4. Vos contenus</h2>
+      <p>Vous êtes responsable de ce que vous publiez. Sont interdits les contenus illicites, injurieux, haineux, ou qui portent atteinte
+        à la vie privée ou à l’image d’une personne. Ne publiez la photo d’une personne qu’avec son accord, et n’indiquez pas dans
+        les champs libres d’informations sensibles sur vous ou sur d’autres (santé, opinions, etc.).
+        Vous restez propriétaire de vos contenus ; vous autorisez seulement leur affichage aux membres du séjour concerné.</p>
+
+      <h2>5. Signalement et modération</h2>
+      <p>Un contenu contraire à ces conditions peut être signalé à l’adresse de contact. L’éditrice peut alors le retirer et, en cas de
+        manquement grave ou répété, suspendre ou supprimer le compte concerné, après en avoir informé la personne sauf urgence.</p>
+
+      <h2>6. Dépenses partagées</h2>
+      <p>Le module de dépenses est un outil de calcul entre membres : Planya ne gère aucun paiement et n’intervient pas dans
+        les remboursements. Chacun reste responsable de vérifier les montants saisis.</p>
+
+      <h2>7. Disponibilité</h2>
+      <p>Planya est fournie gratuitement, sans garantie de disponibilité permanente. L’éditrice peut faire évoluer le service ou
+        y mettre fin ; dans ce dernier cas, les utilisateurs seront prévenus au moins un mois à l’avance pour pouvoir
+        télécharger leurs données.</p>
+
+      <h2>8. Responsabilité</h2>
+      <p>Dans les limites permises par la loi, l’éditrice ne peut être tenue responsable des contenus publiés par les membres ni
+        des décisions prises par un groupe à partir des informations de l’application (horaires, lieux, montants…).</p>
+
+      <h2>9. Données personnelles</h2>
+      <p>Le traitement de vos données est décrit dans la <a href="#/confidentialite">politique de confidentialité</a>.</p>
+
+      <h2>10. Fin de l’utilisation</h2>
+      <p>Vous pouvez supprimer votre compte à tout moment dans <a href="#/compte">Mon compte</a>. Les règles de conservation
+        et de suppression des données sont précisées dans la politique de confidentialité.</p>
+
+      <h2>11. Modification des conditions</h2>
+      <p>En cas de changement important, les utilisateurs en sont informés dans l’application avant son entrée en vigueur.</p>
+
+      <h2>12. Droit applicable</h2>
+      <p>Ces conditions sont soumises au droit français. En cas de désaccord, une solution amiable sera recherchée en priorité
+        via l’adresse de contact ; à défaut, les tribunaux français sont compétents.</p>
+
+      <p class="meta">Version du ${VERSION_CONDITIONS.split('-').reverse().join('/')}.</p>
     </article>`;
   app.querySelector('#retour').onclick = () => aller('#/');
 }
